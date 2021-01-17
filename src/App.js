@@ -1,22 +1,31 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
+import {CardList} from "./componet/card-list/card-list.component";
 
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = {displayMsg: 'Mainframes on the web...'}
+        this.state = {
+            monsters: []
+        }
+
+    }
+
+    /* Life cycle methods */
+    componentDidMount() {
+        fetch('https://jsonplaceholder.typicode.com/users')
+            .then(response => response.json())
+            .then(users => this.setState({monsters: users}));
     }
 
     render() {
         return (
             <div className="App">
-                <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo"/>
-                    <p>{this.state.displayMsg}
-                    </p>
-                    <button onClick={() => this.setState({displayMsg: 'yes they are'})}>Click me!</button>
-                </header>
+                <CardList>
+                    {
+                        this.state.monsters.map(monster => <h1 key={monster.id}>{monster.name}</h1>)
+                    }
+                </CardList>
             </div>
         );
     }
