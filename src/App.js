@@ -6,9 +6,9 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            monsters: []
+            monsters: [],
+            searchField: ''
         }
-
     }
 
     /* Life cycle methods */
@@ -19,11 +19,21 @@ class App extends Component {
     }
 
     render() {
+        // destructuring the state , get the monsters and searchField
+        const {monsters, searchField} = this.state;
+        const filteredMonsters = monsters.filter(monster =>
+            monster.name.toLowerCase()
+                .includes(searchField.toLowerCase()));
+
         return (
             <div className="App">
-                <CardList monsters={this.state.monsters}/>
-            </div>
-        );
+                <input type='search'
+                       placeholder='search monster'
+                       onChange={e => {
+                           this.setState({searchField: e.target.value});
+                       }}/>
+                <CardList monsters={filteredMonsters}/>
+            </div>)
     }
 }
 
