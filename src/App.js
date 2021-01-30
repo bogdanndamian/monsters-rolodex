@@ -10,8 +10,10 @@ class App extends Component {
             monsters: [],
             searchField: ''
         }
-    // binding the function to propagate the state
-        this.handleChange = this.handleChange.bind(this)
+    // binding the function to propagate the class context (including state )  to the method
+    //    this.handleChange = this.handleChange.bind(this)
+        // ATTN. ! this way is not efficient because you would need to do it for each new method
+        // --> use ES6  feature --> arrow functions
     }
 
     /* Life cycle methods */
@@ -28,15 +30,18 @@ class App extends Component {
     *
     */
 
-    handleChange(e){
+ /*   handleChange(e){
       this.setState({searchField: e.target.value})
         // - due to "this" it goes to error because it is not defined;
         // - due to JS way the function scope is not defined;
         // - to fix this ypu need to bind it in the constructor but a better way it to use arrow function because this will propagate
         // the state
 
-    }
+    }*/
 
+    handleChange = (e) => {
+        this.setState({searchField: e.target.value})
+    }
     render() {
         // destructuring the state , get the monsters and searchField
         const {monsters, searchField} = this.state;
