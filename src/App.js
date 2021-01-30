@@ -29,7 +29,7 @@ class App extends Component {
     */
 
     handleChange(e){
-        // this.setState({searchField: e.target.value})
+      this.setState({searchField: e.target.value})
         // - due to "this" it goes to error because it is not defined;
         // - due to JS way the function scope is not defined;
         // - to fix this ypu need to bind it in the constructor but a better way it to use arrow function because this will propagate
