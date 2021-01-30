@@ -10,6 +10,8 @@ class App extends Component {
             monsters: [],
             searchField: ''
         }
+    // binding the function to propagate the state
+        this.handleChange = this.handleChange.bind(this)
     }
 
     /* Life cycle methods */
@@ -19,18 +21,33 @@ class App extends Component {
             .then(users => this.setState({monsters: users}));
     }
 
+    /*
+    *
+    *  Property or Method : Handle change of the searchField attribute from the state.
+    *  @input synthetic event e
+    *
+    */
+
+    handleChange(e){
+        // this.setState({searchField: e.target.value})
+        // - due to "this" it goes to error because it is not defined;
+        // - due to JS way the function scope is not defined;
+        // - to fix this ypu need to bind it in the constructor but a better way it to use arrow function because this will propagate
+        // the state
+
+    }
+
     render() {
         // destructuring the state , get the monsters and searchField
         const {monsters, searchField} = this.state;
-        const filteredMonsters = monsters.filter(monster =>
-            monster.name.toLowerCase()
-                .includes(searchField.toLowerCase()));
+        const filteredMonsters = monsters.filter(monster => monster.name.toLowerCase()
+            .includes(searchField.toLowerCase()));
 
         return (
             <div className="App">
                 <SearchBox
                     placeholder="Search monster ..."
-                    handleChange={e => this.setState({searchField: e.target.value})}
+                    handleChange={this.handleChange}
                 />
                 <CardList monsters={filteredMonsters}/>
             </div>)
